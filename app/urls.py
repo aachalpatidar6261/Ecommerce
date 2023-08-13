@@ -23,4 +23,13 @@ urlpatterns = [
     path('seller-view-detail/<int:pk>/',views.seller_view_detail,name='seller-view-detail'),
     path('seller-edit-product/<int:pk>/',views.seller_edit_product,name='seller-edit-product'),
     path('seller-delete-product/<int:pk>/',views.seller_delete_product,name='seller-delete-product'),
+    path('view-detail/<int:pk>/',views.view_detail,name='view-detail'),
+    path('add-to-wishlist/<int:pk>/',views.add_to_wishlist,name='add-to-wishlist'),
+    path('wishlist/',views.wishlist,name='wishlist'),
+    path('remove-from-wishlist/<int:pk>/',views.remove_from_wishlist,name='remove-from-wishlist'),
+    path('add-to-cart/<int:pk>/',views.add_to_cart,name='add-to-cart'),
+    path('cart/',views.cart,name='cart'),
+    path('remove-from-cart/<int:pk>/',views.remove_from_cart,name='remove-from-cart'),
+
+
 ]

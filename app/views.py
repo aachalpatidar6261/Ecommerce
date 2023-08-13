@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
-from .models import User,Contact,Product
+from .models import User,Contact,Product,Wishlist,Cart
 from django.conf import settings
 from django.core.mail import send_mail
 import random
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    products=Product.objects.all()
+    return render(request,'index.html',{'products':products})
 
 def shop(request):
     return render(request,'shop.html')
@@ -66,6 +67,7 @@ def login(request):
                     request.session['email']=user.email
                     request.session['fname']=user.fname
                     request.session['profile']=user.profile.url
+
                     return render(request,'index.html')
                 else:
                     request.session['email']=user.email
@@ -241,3 +243,79 @@ def seller_delete_product(request,pk):
     product=Product.objects.get(pk=pk)
     product.delete()
     return redirect('seller-view-product')
+
+def view_detail(request,pk):
+    wishlist_flag=False
+    cart_flag=False
+    product=Product.objects.get(pk=pk)
+    try:
+        user=User.objects.get(email=request.session['email'])
+        try:
+            Cart.objects.get(user=user,product=product)
+            cart_flag=True
+        except:
+            pass
+        
+        try:
+            Wishlist.objects.get(user=user,product=product)
+            wishlist_flag=True
+        except:
+            pass
+        return render(request,'view-detail.html',{'product':product,'wishlist_flag':wishlist_flag,'cart_flag':cart_flag})
+    except:
+        return render(request,'view-detail.html',{'product':product})
+
+   
+def add_to_wishlist(request, pk):
+    product=Product.objects.get(pk=pk)
+    user=User.objects.get(email=request.session['email'])
+    Wishlist.objects.create(
+        user=user,
+        product=product
+    )
+    return redirect('wishlist')
+
+def wishlist(request):
+    try:
+        user=User.objects.get(email=request.session['email'])
+        wishlist=Wishlist.objects.filter(user=user)
+        return render(request,"wishlist.html",{'wishlist':wishlist})
+
+    except:
+    
+        return render(request,'login.html')
+
+def remove_from_wishlist(request, pk):
+    product=Product.objects.get(pk=pk)
+    user=User.objects.get(email=request.session['email'])
+    wishlist=Wishlist.objects.filter(user=user,product=product)
+    wishlist.delete()
+    return redirect('wishlist')
+
+def add_to_cart(request, pk):
+    product=Product.objects.get(pk=pk)
+    user=User.objects.get(email=request.session['email'])
+    Cart.objects.create(
+        user=user,
+        product=product,
+        product_price=product.product_price,
+        product_qty=1,
+        total_price=product.product_price,
+    )
+    return redirect('cart')
+
+def cart(request):
+    try:
+        user=User.objects.get(email=request.session['email'])
+        cart=Cart.objects.filter(user=user)
+        return render(request,"cart.html",{'cart':cart})
+    except:
+        return render(request,'login.html')
+
+
+def remove_from_cart(request, pk):
+    product=Product.objects.get(pk=pk)
+    user=User.objects.get(email=request.session['email'])
+    cart=Cart.objects.filter(user=user,product=product)
+    cart.delete()
+    return redirect('cart')

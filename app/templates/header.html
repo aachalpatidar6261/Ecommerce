@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
+    <title>EShopper</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -74,13 +74,13 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                <a href="{% url 'wishlist' %}" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">{{wishlist.count}}</span> 
                 </a>
                 <a href="" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">{{cart.count}}</span>
                 </a>
             </div>
         </div>
@@ -143,7 +143,7 @@
                         <div class="navbar-nav ml-auto py-0">
                             {% if request.session.email %}
                             <a href="{% url 'change-password' %}" class="nav-item nav-link">Change Password</a>
-                            <a href="{% url 'logout' %}" class="nav-item nav-link">Logot</a>
+                            <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
                             <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a>
                             {% else %}                            
                             <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
@@ -212,7 +212,7 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>Home</a>
                             <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                             <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
                             <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>

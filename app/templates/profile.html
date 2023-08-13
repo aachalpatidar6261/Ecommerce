@@ -33,7 +33,7 @@
                     <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="col-md-6 form-group">
-                            <img src="{{request.session.profile.url}}" width="200px" height="200px">
+                            <img src="{{request.session.profile}}" width="200px" height="200px">
                         </div><br>
                         <div class="row">
                            
