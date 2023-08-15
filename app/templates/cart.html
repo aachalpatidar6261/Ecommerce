@@ -63,7 +63,13 @@
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                         <h6 class="text-truncate mb-3">{{i.product.product_name}}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6>{{i.product.product_price}}</h6><h6 class="text-muted ml-2"><del></del></h6>
+                            <h6>Price: {{i.product.product_price}}</h6><h6 class="text-muted ml-2"><del></del></h6><br>
+                            <form name="qty" method="post" action="{% url 'change-qty' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="pk" value="{{i.pk}}">
+                                <h6>QTY : <input type="number" name=product_qty value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();"> </h6>
+                            </form> <br>
+                            <h6>Total: {{i.total_price}}</h6><h6 class="text-muted ml-2"><del></del></h6>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
@@ -72,8 +78,11 @@
                 </div> 
                 <br><br>              
             </div>
-           
+                       
             {%endfor%}
+        </div>
+        <div class="card-footer d-flex justify-content-between bg-light border">
+        <h4 style="color: 	lightpink">Net Price : {{net_price}}</h4>
         </div>
        
     </div>

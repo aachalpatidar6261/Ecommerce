@@ -67,13 +67,16 @@ def login(request):
                     request.session['email']=user.email
                     request.session['fname']=user.fname
                     request.session['profile']=user.profile.url
-
-                    return render(request,'index.html')
+                    wishlist=Wishlist.objects.filter(user=user)
+                    request.session['wishlist_count']=len(wishlist)
+                    cart=Cart.objects.filter(user=user)
+                    request.session['cart_count']=len(cart)
+                    return redirect('index')
                 else:
                     request.session['email']=user.email
                     request.session['fname']=user.fname
                     request.session['profile']=user.profile.url
-                    return render(request,'seller-index.html')
+                    return redirect('seller-index')
             else:
                 msg="Incorrect Password"
                 return render(request,'login.html',{'msg':msg})
@@ -279,6 +282,7 @@ def wishlist(request):
     try:
         user=User.objects.get(email=request.session['email'])
         wishlist=Wishlist.objects.filter(user=user)
+        request.session['wishlist_count']=len(wishlist)
         return render(request,"wishlist.html",{'wishlist':wishlist})
 
     except:
@@ -305,17 +309,26 @@ def add_to_cart(request, pk):
     return redirect('cart')
 
 def cart(request):
-    try:
-        user=User.objects.get(email=request.session['email'])
-        cart=Cart.objects.filter(user=user)
-        return render(request,"cart.html",{'cart':cart})
-    except:
-        return render(request,'login.html')
-
+    net_price=0
+    user=User.objects.get(email=request.session['email'])
+    cart=Cart.objects.filter(user=user)
+    request.session['cart_count']=len(cart)
+    for i in cart:
+        net_price=net_price+i.total_price
+    return render(request,"cart.html",{'cart':cart,'net_price':net_price})
 
 def remove_from_cart(request, pk):
     product=Product.objects.get(pk=pk)
     user=User.objects.get(email=request.session['email'])
     cart=Cart.objects.filter(user=user,product=product)
     cart.delete()
+    return redirect('cart')
+
+def change_qty(request):
+    pk=int(request.POST['pk']) # from data always return in string format so we use int.
+    cart=Cart.objects.get(pk=pk)
+    product_qty=int(request.POST['product_qty'])
+    cart.product_qty=product_qty
+    cart.total_price=cart.product_price*product_qty
+    cart.save()
     return redirect('cart')
