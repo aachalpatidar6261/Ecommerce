@@ -133,3 +133,6 @@ EMAIL_HOST_PASSWORD = 'zgyemgqomytrnffz'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+STRIPE_PUBLIC_KEY='pk_test_51NdrRaSFrpNPRRx9e6CabgkSHhz0V8oZvNwxE7diw4jiIwfwn19Wiz5i65CDh1t8tIbhf5AhLfz7tBlgWUcdrb6W00LYoI2MpE'
+STRIPE_PRIVATE_KEY='sk_test_51NdrRaSFrpNPRRx95pkQCXxJDTBiXfm8e8XhlV6u4imOt9YCDYc5S3FMxdmbMcxjbTE3dTXaUvqZgTl8BI9dK8rU00vgJbKb1w'

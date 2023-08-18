@@ -55,7 +55,7 @@ class Cart(models.Model):
     product_price=models.PositiveIntegerField()
     product_qty=models.PositiveIntegerField(default=1)
     total_price=models.PositiveIntegerField()
-    Product_statuc=models.BooleanField(default=False)
+    payment_status=models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.fname+" - "+self.product.product_name

@@ -31,6 +31,11 @@ urlpatterns = [
     path('cart/',views.cart,name='cart'),
     path('remove-from-cart/<int:pk>/',views.remove_from_cart,name='remove-from-cart'),
     path('change-qty/',views.change_qty,name='change-qty'),
-
-
+    path('create-checkout-session/',views.create_checkout_session,name='create-checkout-session'),
+    path('success.html/', views.success,name='success'),
+    path('cancel.html/', views.cancel,name='cancel'),
+    path('myorder/',views.myorder,name='myorder'),
+    path('ajax/validate-email/',views.validate_signup,name='ajax/validate-email'),
+    path('ajax/validate-email/',views.validate_login,name='ajax/validate-email'),
+    path('ajax/validate-email/',views.validate_cp,name='ajax/validate-email'),
 ]

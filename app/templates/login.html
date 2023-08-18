@@ -34,7 +34,8 @@
                         {% csrf_token %}
                             <div class="col-md-6 form-group">
                                 <label>E-mail</label>
-                                <input class="form-control" type="email" placeholder="Enter Email" name="email">
+                                <input class="form-control" type="email" placeholder="Enter Email" id="email" name="email">
+                                <span id="email_error"></span>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Password</label>
@@ -53,6 +54,32 @@
         </div>
     </div>
     <!-- Checkout End -->
+    <script>
+        $("#email").change(function()
+                                    {
+                                     var email=$(this).val();
+                                     $.ajax
+                                     ({
+                                        url: '/ajax/validate-email',
+                                        data:{
+                                                'email':email
+                                            },
+                                        dataType: 'json',
+                                        success: function(data)                                   
+                                        {
+                                            if (!data.is_taken)
+                                            {
+                                             document.getElementById("email_error").innerHTML="This Email is Not Registered";
+                                            }
+                                            else
+                                            {
+                                              document.getElementById("email_error").innerHTML="";
+                                            }
+                                        }
+                                     });                              
+                                    });
+      
+      </script>
 
 </body>
 </html>
