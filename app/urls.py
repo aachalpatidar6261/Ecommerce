@@ -19,7 +19,7 @@ urlpatterns = [
     path('seller-index/',views.seller_index,name='seller-index'),
     path('seller-add-product/',views.seller_add_product,name='seller-add-product'),
     path('seller-view-product/',views.seller_view_product,name='seller-view-product'),
-    path('seller-order-product/',views.seller_order_product,name='seller-order-product'),
+    path('seller-view-order/',views.seller_view_order,name='seller-view-order'),
     path('seller-view-detail/<int:pk>/',views.seller_view_detail,name='seller-view-detail'),
     path('seller-edit-product/<int:pk>/',views.seller_edit_product,name='seller-edit-product'),
     path('seller-delete-product/<int:pk>/',views.seller_delete_product,name='seller-delete-product'),
@@ -38,4 +38,18 @@ urlpatterns = [
     path('ajax/validate-email/',views.validate_signup,name='ajax/validate-email'),
     path('ajax/validate-email/',views.validate_login,name='ajax/validate-email'),
     path('ajax/validate-email/',views.validate_cp,name='ajax/validate-email'),
+    
+    path('women/',views.women,name='women'),
+    path('men/',views.men,name='men'),
+    path('kids/',views.kids,name='kids'),
+    path('accesseries/',views.accesseries,name='accesseries'),
+    path('shoes/',views.shoes,name='shoes'),
+    path('Goggles/',views.Goggles,name='Goggles'),
+    path('Makeup/',views.Makeup,name='Makeup'),
+    path('Party-Bulb/',views.Party_Bulb,name='Party Bulb'),
+    path('Furniture/',views.Furniture,name='Furniture'),
+    path('Kitchen-tools/',views.Kitchen_tools,name='Kitchen tools'),
+
+
+
 ]

@@ -5,6 +5,12 @@
 <html lang="en">
 <head>
     <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body  {
+            background-image: url("paper.gif");
+            background-color: #cccccc   ;
+          }
+    </style>
 </head>
 <body>
     <!-- user for later {unique idea } -->
@@ -36,19 +42,14 @@
     </div> -->
     <!-- Offer End -->
 
-     <!-- Featured Start -->
-    
-    <!-- Featured End -->
-
-
-    
+        
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
             {% if cart %}
             <h2 class="section-title px-5"><span class="px-2">Total Products {{cart.count}}</span></h2>
             {% else %}
-            <h2 class="section-title px-5"><span class="px-2">NO Product In Order</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">NO Product In MyOrder</span></h2>
             {% endif %}
         </div>  
          <br><br>
@@ -57,13 +58,13 @@
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">               
                 <div class="card product-item border-0 mb-4">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img src="{{i.product.product_image.url}}" class="img-fluid w-100"  alt="{{i.product.product_name}}" style=" max-width:400px; max-height:400px; min-width:400px; min-height:400px;">
+                        <img src="{{i.product.product_image.url}}" class="img-fluid w-100"  alt="{{i.product.product_name}}" >
                     </div>
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                         <h6 class="text-truncate mb-3">{{i.product.product_name}}</h6>
                         <div class="d-flex justify-content-center">
                             <h6>Price: {{i.product.product_price}}</h6><h6 class="text-muted ml-2"><del></del></h6><br>
-                            <form name="qty" method="post" action="{% url 'change-qty' %}">
+                            <form name="qty" method="post" action="{% url 'change-qty' %}" readonly>
                                 {% csrf_token %}
                                 <input type="hidden" name="pk" value="{{i.pk}}">
                                 <h6>QTY : <input type="number" name=product_qty value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();" readonly> </h6>

@@ -4,12 +4,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        body  {
+            background-image: url("paper.gif");
+            background-color: #cccccc;
+          }
+        .one {
+            border: 5px solid rgb(238, 230, 238);
+            background-color: whitw;
+        }
+        img {
+            border-radius: 50%;
+          }
+    </style>
 </head>
 
 <body>
 <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Profile</h1>
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
@@ -26,14 +39,14 @@
         <div class="row px-xl-5">
             <div class="col-lg-8">
                 <div class="mb-4">
-                    <h4 class="font-weight-semi-bold mb-4">Update Profile </h4>
+                    
                     {% if msg %}
                     <b style="color: blue">{{msg}}</b>
                     {%endif%}
                     <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="col-md-6 form-group">
-                            <img src="{{request.session.profile}}" width="200px" height="200px">
+                            <img class="one" src="{{request.session.profile}}" width="200px" height="210px" style="border">
                         </div><br>
                         <div class="row">
                            
@@ -66,6 +79,8 @@
                                 <label>Profile</label>
                                 <input class="form-control" type="file" name="profile" >
                             </div>
+                            <br>
+                            <br>
                             
                             <div class="card-footer border-secondary bg-transparent"> 
                                 <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Update Profile</button>

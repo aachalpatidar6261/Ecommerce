@@ -29,12 +29,15 @@ def validate_login(request):
     return JsonResponse(data)
 
 def validate_cp(request):
+    user=User.objects.get(email=request.session['email']) 
     cp=request.GET.get('oldpassword')
-    data={
+
+    if user.password==cp:
+        data={
         'is_taken':User.objects.filter(email__iexact=cp).exists()
          }
-    return JsonResponse(data)
-
+        return JsonResponse(data)
+   
 
 
 @csrf_exempt
@@ -76,15 +79,17 @@ def success(request):
 def cancel(request):
 	return render(request,'cancel.html')
 
-
 def index(request):
     products=Product.objects.all()
     return render(request,'index.html',{'products':products})
 
 def shop(request):
-    return render(request,'shop.html')
+    products=Product.objects.filter(product_category="Women")
+    return render(request,'shop.html',{'products':products})
+    
 def detail(request):
-    return render(request,'detail.html')
+    products=Product.objects.all()
+    return render(request,'detail.html',{'products':products})
 
 def checkout(request):
     return render(request,'checkout.html')
@@ -143,7 +148,10 @@ def login(request):
                     request.session['wishlist_count']=len(wishlist)
                     cart=Cart.objects.filter(user=user,payment_status=False)
                     request.session['cart_count']=len(cart)
+                    myorder=Cart.objects.filter(payment_status=True)
+                    request.session['cart_count']=len(myorder)
                     return redirect('index')
+                
                 else:
                     request.session['email']=user.email
                     request.session['fname']=user.fname
@@ -288,8 +296,6 @@ def seller_view_product(request):
     products=Product.objects.filter(seller=seller)
     return render(request,'seller-view-product.html',{'products':products})
 
-def seller_order_product(request):
-    return render(request,'seller-order-product.html')\
     
 
 def seller_view_detail(request,pk):
@@ -326,7 +332,7 @@ def view_detail(request,pk):
     try:
         user=User.objects.get(email=request.session['email'])
         try:
-            Cart.objects.get(user=user,product=product)
+            Cart.objects.get(user=user,product=product,payment_statuc=False)
             cart_flag=True
         except:
             pass
@@ -406,6 +412,62 @@ def change_qty(request):
     return redirect('cart')
 
 def myorder(request):
-    user=User.objects.get(email=request.session['email'])
-    cart=Cart.objects.filter(user=user,Payment_status=True)
-    return render(request,'myorder.html',{'cart':cart})
+    try:
+        user=User.objects.get(email=request.session['email'])
+        cart=Cart.objects.filter(user=user,payment_status=True)
+        return render(request,'myorder.html',{'cart':cart})
+    except:
+        msg="PLEASE, Signup"
+        return render(request,'myorder.html')
+
+
+def seller_view_order(request):
+    myorder=[]
+    seller=User.objects.get(email=request.session['email'])
+    cart=Cart.objects.filter(payment_status=True)
+    for i in cart:
+        if i.product.seller == seller:
+            myorder.append(i)
+    myorder=Cart.objects.filter(payment_status=False)
+    request.session['cart_count']=len(myorder)
+    return render(request,'seller_view_order.html',{'myorder':myorder})
+
+def women(request):
+    products=Product.objects.filter(product_category="Women")
+    return render(request,'shop.html',{'products':products})
+
+def men(request):
+    products=Product.objects.filter(product_category="Men")
+    return render(request,'shop.html',{'products':products})
+
+def kids(request):
+    products=Product.objects.filter(product_category="Kids")
+    return render(request,'shop.html',{'products':products})
+
+def accesseries(request):
+    products=Product.objects.filter(product_category="Accessories")
+    return render(request,'shop.html',{'products':products})
+
+def shoes(request):
+    products=Product.objects.filter(product_category="Shoes")
+    return render(request,'shop.html',{'products':products})
+
+def Goggles(request):
+    products=Product.objects.filter(product_category="Goggles")
+    return render(request,'shop.html',{'products':products})
+
+def Makeup(request):
+    products=Product.objects.filter(product_category="Makeup")
+    return render(request,'shop.html',{'products':products})
+
+def Party_Bulb(request):
+    products=Product.objects.filter(product_category="Party Bulb")
+    return render(request,'shop.html',{'products':products})
+
+def Furniture(request):
+    products=Product.objects.filter(product_category="Furniture")
+    return render(request,'shop.html',{'products':products})
+
+def Kitchen_tools(request):
+    products=Product.objects.filter(product_category="Kitchen tools")
+    return render(request,'shop.html',{'products':products})

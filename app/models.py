@@ -31,7 +31,13 @@ class Product(models.Model):
         ("Women","Women"),
         ("Kids","kids"),
         ("Accessories","Accessories"),
-        ("Shoes","Shoes")
+        ("Shoes","Shoes"),
+        ("Goggles","Goggles"),
+        ("Makeup","Makeup"),
+        ("Furniture","Sandals"),
+        ("Party Bulb","Party Bulb"),
+        ("Kitchen tools","Kitchen tools"),
+
         )
     product_category=models.CharField(max_length=100,choices=choice1)
     product_name=models.CharField(max_length=100)
